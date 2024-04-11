@@ -660,7 +660,9 @@ class Formula(object):
         for ctx in to_clean:
             # deleting the content of all the formulas' in the context
             for key in list(Formula._instances[ctx].keys()):
-                Formula._instances[ctx][key].__del__()
+                instance = Formula._instances[ctx][key]
+                if instance not in (PYSAT_TRUE, PYSAT_FALSE):
+                    instance.__del__()
 
             # deleting the corresponding instances and variable manager
             del Formula._instances[ctx]
