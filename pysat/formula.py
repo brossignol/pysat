@@ -659,8 +659,9 @@ class Formula(object):
         # actual cleaning
         for ctx in to_clean:
             # deleting the content of all the formulas' in the context
-            for key in list(Formula._instances[ctx].keys()):
-                Formula._instances[ctx][key].__del__()
+            for value in list(Formula._instances[ctx].values()):
+                if value not in (PYSAT_TRUE, PYSAT_FALSE):
+                    value.__del__()
 
             # deleting the corresponding instances and variable manager
             del Formula._instances[ctx]
